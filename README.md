@@ -3,7 +3,7 @@
 ### Black-Box Testing · Equivalence Classes · Test Cases · Java Simulation
 
 ## 👤 Students
-**Johan Alejandro Gloria González**
+**Johan Alejandro Gloria González** &
 **Iván Kaleb Ramírez Torres**  
 TechnoReady In-Mexico Bootcamp – Challenge 8  
 

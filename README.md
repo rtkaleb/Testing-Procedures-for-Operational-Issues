@@ -116,6 +116,28 @@ Full tables available in `/docs/sprint1/`.
 ---
 
 # 🧪 Test Cases (Sprint 2)
+
+The following section presents the 12 test cases designed for Sprint 2 of the Banking QA Application project.  
+All cases were derived from the equivalence classes established in Sprint 1, ensuring broad and systematic coverage across valid, invalid, and boundary input conditions.
+
+The banking application requires validation of the following fields:
+- Bank Code  
+- Branch Code  
+- Account Number  
+- Personal Key  
+- Order Value  
+
+Each test case includes:
+- A unique Test Case ID  
+- A concise scenario description  
+- Input values for all required fields  
+- The corresponding equivalence class alignment  
+- The expected system behavior  
+- The initial and final application state  
+
+These test cases collectively validate normal operation, error handling under malformed data, boundary limits, and multi-error scenarios.  
+They also establish the foundation for automated verification through the Java simulation implemented in Sprint 3.
+
 12 test cases include:
 
 - ID  
@@ -126,6 +148,50 @@ Full tables available in `/docs/sprint1/`.
 - Initial and final state  
 
 Excel file located at `/docs/sprint2/12_Test_Cases.xlsx`.
+
+This document lists the 12 test cases designed from the defined equivalence classes.
+
+| Test Case ID | Description | Bank Code | Branch Code | Account Number | Personal Key | Order Value | Equivalence Class Alignment | Expected Result | Initial State | Final State |
+|--------------|-------------|-----------|-------------|----------------|--------------|-------------|-----------------------------|-----------------|---------------|-------------|
+| TC01 | Valid request with all fields in valid classes (checkbook request). | 123 | 1023 | 9876543210 | 445566 | 1 | BC1, BR1, AC1, PK1, OV1 (all valid) | Request accepted. Checkbook request is successfully registered. | User with no pending checkbook request. | New checkbook request stored in the system. |
+| TC02 | Valid request with all fields in valid classes (account statement request). | 123 | 1023 | 1234567890 | 112233 | 2 | BC1, BR1, AC1, PK1, OV2 (all valid) | Request accepted. Monthly account statement request is successfully registered. | User with no pending statement request. | New monthly account statement request stored in the system. |
+| TC03 | Invalid bank code (too short), other fields valid. | 12 | 1023 | 9876543210 | 445566 | 1 | BC2 (invalid length), BR1, AC1, PK1, OV1 | Request rejected. Error message indicating invalid bank code length. | No pending operations for the user. | No request stored; state remains unchanged. |
+| TC04 | Invalid branch code (non-numeric characters), other fields valid. | 123 | 1A33 | 9876543210 | 445566 | 1 | BC1, BR4 (invalid characters), AC1, PK1, OV1 | Request rejected. Error message indicating invalid branch code format. | No pending operations for the user. | No request stored; state remains unchanged. |
+| TC05 | Invalid account number (contains letters). | 123 | 1023 | A234567890 | 445566 | 1 | BC1, BR1, AC4 (invalid characters), PK1, OV1 | Request rejected. Error message indicating invalid account number format. | No pending operations for the user. | No request stored; state remains unchanged. |
+| TC06 | Invalid personal key (too short). | 123 | 1023 | 9876543210 | 123 | 1 | BC1, BR1, AC1, PK2 (invalid length), OV1 | Request rejected. Error message indicating invalid personal key length. | No pending operations for the user. | No request stored; state remains unchanged. |
+| TC07 | Invalid order value (numeric but unsupported option 3). | 123 | 1023 | 9876543210 | 445566 | 3 | BC1, BR1, AC1, PK1, OV3 (invalid value) | Request rejected. Error message indicating unsupported operation type. | No pending operations for the user. | No request stored; state remains unchanged. |
+| TC08 | Invalid order value (non-numeric). | 123 | 1023 | 9876543210 | 445566 | A | BC1, BR1, AC1, PK1, OV4 (invalid type) | Request rejected. Error message indicating invalid order value type. | No pending operations for the user. | No request stored; state remains unchanged. |
+| TC09 | Multiple invalid fields (bank code too long and branch code too short). | 1234 | 999 | 9876543210 | 445566 | 1 | BC3 (too long), BR2 (too short), AC1, PK1, OV1 | Request rejected. Error messages indicating invalid bank and branch codes. | No pending operations for the user. | No request stored; state remains unchanged. |
+| TC10 | Boundary valid values (all zeros but correct length). | 000 | 0000 | 0000000000 | 000000 | 1 | BC1, BR1, AC1, PK1, OV1 (boundary but valid) | Request accepted. Checkbook request successfully registered for boundary values. | User with no pending checkbook request. | New checkbook request stored in the system. |
+| TC11 | Empty input for all fields. |  |  |  |  |  | All fields in invalid classes (empty/missing). | Request rejected. Error messages indicating that all fields are mandatory. | No pending operations for the user. | No request stored; state remains unchanged. |
+| TC12 | Valid lengths but personal key contains non-numeric characters. | 123 | 1023 | 1234567890 | 12A456 | 2 | BC1, BR1, AC1, PK4 (invalid characters), OV2 | Request rejected. Error message indicating invalid personal key format. | No pending operations for the user. | No request stored; state remains unchanged. |
+
+---
+
+## Conclusions
+
+The completion of Sprint 2 resulted in the creation of 12 fully detailed test cases, each derived directly from the equivalence classes defined in Sprint 1. This sprint marks the transition from theoretical test modeling to practical, structured QA documentation.
+
+### Key Outcomes
+- All test cases map to at least one valid or invalid equivalence class, ensuring systematic and complete coverage.  
+- The test suite includes scenarios with simple errors, multi-field errors, boundary cases, and fully valid inputs, reflecting realistic banking system behaviors.  
+- Each case documents inputs, expected results, and both initial and final system states, ensuring full traceability.  
+- The Excel file includes a dedicated “Equivalence Class Alignment” column for improved clarity and auditability.  
+- These 12 cases form the baseline for automated input validation during the Java simulation in Sprint 3.
+
+### What Was Learned
+- Equivalence Class Partitioning (ECP) significantly reduces the number of required test cases while preserving test coverage.  
+- Banking input fields require strict validation to prevent operational, transactional, and security issues.  
+- Multi-error scenarios highlight the importance of compound error handling in financial applications.  
+- Boundary values, even when valid, must be tested to ensure stability and prevent unexpected system behavior.
+
+### Preparedness for Sprint 3
+The test cases developed in Sprint 2 will be used directly within the Java simulation to validate:
+- Successful workflows with valid data  
+- Error responses generated under invalid inputs  
+- System behavior when handling boundary conditions  
+
+Sprint 2 provides a complete and solid test foundation, enabling Sprint 3 to be implemented accurately and efficiently.
 
 ---
 

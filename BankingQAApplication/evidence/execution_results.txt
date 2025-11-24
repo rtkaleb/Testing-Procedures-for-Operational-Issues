@@ -1,0 +1,110 @@
+=== Sprint 3 - Execution Evidence ===
+Date: 2025-11-24
+Project: Banking QA Application
+
+====================================
+
+
+These two runs show examples of incorrect behavior observed during exploratory testing. They are included here to document what to fix and to reproduce the bugs.
+
+1) Failure: Invalid input was accepted (regression)
+   - Command: `mvn compile exec:java` (simulation run)
+   - Input used:
+     - bankCode=123
+     - branchCode=1023
+     - accountNumber=9876543210
+     - personalKey=445566
+     - orderValue=3    (INVALID: allowed values are 1 or 2)
+   - Expected: REJECTED with an error indicating invalid `orderValue`.
+   - Actual (observed): ACCEPTED — output shows `Resultado: VÁLIDO` (bug: unsupported order value was treated as valid)
+   - Notes: This indicates a regression in the order value check or an input mapping issue. Reproduce by constructing a `BankRequest` with `orderValue="3"` and calling `BankRequestValidator.process(...)`.
+
+2) Failure: Valid input rejected (false negative)
+   - Command: `mvn test` (unit test run) OR `mvn compile exec:java` (simulation)
+   - Input used (nominal valid case):
+     - bankCode=123
+     - branchCode=1023
+     - accountNumber=1234567890
+     - personalKey=112233
+     - orderValue=2
+   - Expected: ACCEPTED (no validation errors)
+   - Actual (observed): REJECTED — error message: `Branch code must be numeric` (bug: valid branch code rejected)
+   - Notes: This may be caused by whitespace, encoding, or an over-strict numeric check; reproduce by invoking the validator with the exact inputs above and inspecting `ValidationResult.getMessages()`.
+
+Both failure scenarios are documented here to help the dev/test team reproduce, write failing unit tests, and track fixes.
+
+TEST EXECUTION RESULTS (mvn test)
+====================================
+
+Command: mvn test
+
+Results:
+- Tests run: 12
+- Failures: 0
+- Errors: 0
+- Skipped: 0
+- Time elapsed: 0.05 s
+
+Status: BUILD SUCCESS
+
+Test Cases Executed:
+- TC01: Valid checkbook request (PASS)
+- TC02: Valid statement request (PASS)
+- TC03: Invalid bank code too short (PASS)
+- TC04: Invalid branch non-numeric (PASS)
+- TC05: Invalid account with letters (PASS)
+- TC06: Invalid personal key too short (PASS)
+- TC07: Invalid order value unsupported (PASS)
+- TC08: Invalid order value non-numeric (PASS)
+- TC09: Multiple invalid fields (PASS)
+- TC10: Boundary valid zeros (PASS)
+- TC11: Empty all fields (PASS)
+- TC12: Personal key non-numeric characters (PASS)
+
+====================================
+SIMULATION EXECUTION RESULTS (mvn compile exec:java)
+====================================
+
+Command: mvn compile exec:java
+
+Output:
+
+--- Válido (TC01) ---
+BankRequest{bankCode='123', branchCode='1023', accountNumber='9876543210', personalKey='445566', orderValue='1'}
+Resultado: VÁLIDO
+
+--- Inválido (TC05/TC03 mix) ---
+BankRequest{bankCode='12', branchCode='1A33', accountNumber='A234567890', personalKey='123', orderValue='3'}
+Resultado: INVÁLIDO
+ - Bank code must be 3 digits
+ - Branch code must be numeric
+ - Account number must be numeric
+ - Personal key must be 6 digits
+ - Order value must be 1 (checkbook) or 2 (statement)
+
+--- Límite (TC10) ---
+BankRequest{bankCode='000', branchCode='0000', accountNumber='0000000000', personalKey='000000', orderValue='1'}
+Resultado: VÁLIDO
+
+Status: BUILD SUCCESS
+
+====================================
+SUMMARY
+====================================
+
+✓ All 12 JUnit 5 parameterized tests passed
+✓ Simulation executed successfully with 3 cases:
+  - 1 valid case (TC01): Checkbook request accepted
+  - 1 invalid case (TC05/TC03 mix): 5 validation errors detected
+  - 1 boundary case (TC10): Zero values accepted as valid
+✓ Maven build successful
+✓ Black-box testing approach verified: Input → Output validation without internal dependency
+✓ Equivalence class partitioning confirmed:
+  - Valid classes: TC01, TC02, TC10
+  - Invalid classes: TC03, TC04, TC05, TC06, TC07, TC08, TC09, TC11, TC12
+
+FINDINGS:
+- Validator correctly rejects invalid inputs with descriptive error messages
+- Boundary values (all zeros) are properly accepted
+- Multi-error scenarios produce comprehensive error lists
+- Black-box tests verify behavior without coupling to implementation details

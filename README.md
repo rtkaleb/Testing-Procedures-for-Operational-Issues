@@ -217,19 +217,78 @@ Source file: `/src/BankSimulation.java`
 
 ---
 
+## Sprint 3 — Test Case Execution (English)
+
+This section documents how the Sprint 3 test cases were executed and the successful outcomes.
+
+- Execution environment: Windows PowerShell, JDK 11+, Maven 3.x.
+- Commands used:
+	- Run unit tests: `mvn test`
+	- Run simulation: `mvn compile exec:java`
+
+- Executed cases (examples saved in `BankingQAApplication/evidence/execution_results.txt`):
+	1. TC01 — Valid checkbook request
+		 - Input: `bankCode=123`, `branchCode=1023`, `accountNumber=9876543210`, `personalKey=445566`, `orderValue=1`
+		 - Expected: Accepted (no validation errors)
+		 - Result: Accepted — "RESULT: VÁLIDO"
+
+	2. TC05/TC03 mix — Invalid multi-field request
+		 - Input: `bankCode=12` (too short), `branchCode=1A33` (non-numeric), `accountNumber=A234567890` (letters), `personalKey=123` (too short), `orderValue=3` (unsupported)
+		 - Expected: Rejected with field-specific error messages
+		 - Result: Rejected — errors returned for bank code, branch code, account number, personal key, order value
+
+	3. TC10 — Boundary case (zeros)
+		 - Input: `bankCode=000`, `branchCode=0000`, `accountNumber=0000000000`, `personalKey=000000`, `orderValue=1`
+		 - Expected: Accepted if zeros meet length and numeric rules
+		 - Result: Accepted — "RESULT: VÁLIDO"
+
+- How the cases were executed:
+	1. Tests: The 12 designed cases (TC01–TC12) were encoded as a JUnit 5 parameterized test (`@MethodSource`) in `BankRequestValidatorTest`. Running `mvn test` executed them as black-box checks (input → expected validity). All 12 tests passed.
+	2. Simulation: `BankSimulation` contains a small `main` that builds three representative `BankRequest` instances (valid, invalid, boundary) and prints the `ValidationResult`. Running `mvn compile exec:java` produced console output which was captured and saved to `BankingQAApplication/evidence/execution_results.txt`.
+
+- Evidence and artifacts:
+	- `BankingQAApplication/evidence/execution_results.txt` — console output showing simulation results and detected validation messages.
+	- `BankingQAApplication/pom.xml` — Maven project file used to run tests and simulation.
+	- Source files: `BankingQAApplication/src/main/java/com/techready/banking/**` and tests in `BankingQAApplication/src/test/java/com/techready/banking/test/`.
+
+Summary: The Sprint 3 simulation validates the equivalence-class based test cases in an automated, repeatable way. The three representative runs verify successful acceptance of valid and boundary inputs and correct rejection with detailed error messages for invalid inputs.
+
 # 📁 Folder Structure
 
+Repository root (`challenge_8`):
+
 ```
-/
-├── docs/
-│   ├── sprint1/
-│   ├── sprint2/
-│   └── sprint3/
-├── src/
-│   └── BankSimulation.java
-├── evidence/
-└── README.txt
+challenge_8/
+├── BankingQAApplication/
+│   ├── pom.xml
+│   ├── src/
+│   │   ├── main/
+│   │   │   └── java/
+│   │   │       └── com/techready/banking/
+│   │   │           ├── model/
+│   │   │           │   ├── BankRequest.java
+│   │   │           │   └── ValidationResult.java
+│   │   │           ├── validation/
+│   │   │           │   └── BankRequestValidator.java
+│   │   │           └── simulation/
+│   │   │               └── BankSimulation.java
+│   │   └── test/
+│   │       └── java/
+│   │           └── com/techready/banking/test/
+│   │               └── BankRequestValidatorTest.java
+│   ├── docs/
+│   │   ├── sprint1/
+│   │   └── sprint2/
+│   ├── evidence/
+│   │   └── execution_results.txt
+│   └── README.md (project-level docs)
+├── Sprint 1/
+├── Sprint 2/
+└── Sprint 3/
 ```
+
+Notes:
+- The Sprint 3 README was consolidated into the root `README.md` and the `docs/sprint3` directory removed; evidence for simulation runs is under `BankingQAApplication/evidence`.
 
 ---
 

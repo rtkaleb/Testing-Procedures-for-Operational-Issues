@@ -217,7 +217,7 @@ Source file: `/src/BankSimulation.java`
 
 ---
 
-## Sprint 3 — Test Case Execution (English)
+## Sprint 3 — Test Case Execution
 
 This section documents how the Sprint 3 test cases were executed and the successful outcomes.
 
@@ -364,54 +364,89 @@ Better validation → fewer mistakes → fewer resource-consuming interventions.
 
 # 💰 Estimated Cost
 
-## Assumptions
-- QA Analyst hourly rate: **$20 USD/hour**  
-- Estimated total workload (based on prior prioritization table): **~20–22 hours**  
+## 💰 Estimated Budget – Challenge 8 (Two-Person Team)
+**Quality Assurance & Test Engineering for a Banking Application**
+
+### 👥 Team Composition
+
+| Team Member | Role | Experience Level | Hourly Rate |
+|-------------|------|------------------|-------------|
+| **Iván Kaleb Ramírez Torres** | Lead QA Analyst & Documentation Specialist | Semi-Senior / Senior | **$450 – $550 MXN/h** |
+| **Johan Alejandro Gloria González** | Junior QA Tester | Entry-Level | **$180 – $250 MXN/h** |
+
+This project benefits from a **high-skill lead** guiding a **junior collaborator**, significantly improving the quality of analysis, execution, and deliverables.
 
 ---
 
-## 1. Cost Breakdown
+### 🕒 Estimated Effort Distribution
 
-| Activity | Estimated Hours | Cost per Hour | Estimated Cost |
-|----------|-----------------|---------------|----------------|
-| Equivalence Class Definition | 3h | $20 | **$60** |
-| Equivalence Class Documentation (PDF) | 2h | $20 | **$40** |
-| Test Case Design (12 cases) | 4h | $20 | **$80** |
-| Test Case Documentation (Excel) | 1.5h | $20 | **$30** |
-| Java Simulation Development | 4h | $20 | **$80** |
-| Execution Examples | 2h | $20 | **$40** |
-| Simulation README | 1h | $20 | **$20** |
-| Third-Party Review | 1h | $20 | **$20** |
-| Findings Report | 1h | $20 | **$20** |
+Total project effort remains between **26 – 40 hours**, but work is shared:
 
-### Total Estimated Cost:  
-# **💵 $390 USD**
+| Deliverable | Senior Hours | Junior Hours | Total |
+|-------------|-------------|-------------|-------|
+| Sprint 1 – Equivalence Classes | 4–6 h | 2–4 h | 6–10 h |
+| Sprint 2 – Boundary Value Analysis | 3–4 h | 1–2 h | 4–6 h |
+| Sprint 3 – Test Case Design | 5–7 h | 3–5 h | 8–12 h |
+| Sprint 4 – Executive PDF Presentation | 5–6 h | 1–2 h | 6–8 h |
+| Documentation & Review | 2–3 h | 1 h | 3–4 h |
+| **TOTAL** | **19–26 h** | **8–14 h** | **26–40 h** |
 
 ---
 
-## 2. Optional/Indirect Costs
+### 💵 Final Cost Calculation
 
-| Category | Estimated Cost |
-|----------|----------------|
-| Software tools (IDE, PDF tools, Office suite) | $0–$50 |
-| Infrastructure (electricity, equipment wear) | $10–$20 |
-| Communication cycles/feedback rounds | $15–$30 |
+#### **Senior QA**
+**19–26 hours × $450–$550 MXN/h**
 
-### Possible Grand Total:  
-# **💵 $420–$460 USD**
+| Senior Hours | Rate | Total |
+|--------------|------|-------|
+| 19 h | $450 MXN | $8,550 MXN |
+| 26 h | $550 MXN | $14,300 MXN |
+
+**Estimated Range Senior:** **$8,550 – $14,300 MXN**
 
 ---
 
-## 3. Cost–Benefit Justification
-A structured QA process prevents costly failures in production.  
-Even one invalid banking operation may cost:
+#### **Junior QA**
+**8–14 hours × $180–$250 MXN/h**
 
-- Customer dissatisfaction  
-- Compliance penalties  
-- Manual correction labor  
-- System fixes  
+| Junior Hours | Rate | Total |
+|--------------|------|-------|
+| 8 h | $180 MXN | $1,440 MXN |
+| 14 h | $250 MXN | $3,500 MXN |
 
-The **$390 USD investment** helps prevent losses potentially exceeding several thousand dollars.
+**Estimated Range Junior:** **$1,440 – $3,500 MXN**
+
+---
+
+### 📊 **Total Team Budget**
+
+| Minimum Possible | Maximum Possible |
+|------------------|-----------------|
+| **$9,990 MXN** | **$17,800 MXN** |
+
+### 🧾 **Realistic Market Price**
+Profiles and banking context:
+
+### **💵 Final Professional Range:**  
+## **$10,000 – $18,000 MXN**
+
+This value aligns with:
+
+- A dual-profile QA team  
+- Banking sector quality standards  
+- Executive-grade documentation  
+- Advanced testing methodology  
+- Senior supervision plus junior execution
+
+---
+
+### 🏁 Budget Conclusion
+
+🔹 Expertise elevates the deliverable quality  
+🔹 Junior contributes execution capacity at lower cost  
+🔹 The client receives senior-level analysis at team efficiency
+
 
 ---
 
